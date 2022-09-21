@@ -1,8 +1,6 @@
 import 'dart:io';
 import 'dart:math';
 
-import 'package:testes/testes.dart' as testes;
-
 void main() {
 
   List listaDeRaios = [5, 8, 12, 7.3, 18, 2, 25];

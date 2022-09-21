@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:testes/testes.dart' as testes;
-
 void main() {
 
   List listaDeTemp = [0.0, 4.2, 15.0, 18.1, 21.7, 32.0, 40.0, 41.0];

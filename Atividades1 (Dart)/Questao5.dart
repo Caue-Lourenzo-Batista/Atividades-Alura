@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:collection/collection.dart';
 import "dart:math";
-import 'package:testes/testes.dart' as testes;
 
 void main() {
 

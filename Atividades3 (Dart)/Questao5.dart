@@ -1,64 +1,87 @@
 void main() {
-  //  final controleDePessoas = ControleDePessoas();
+  final controleDePessoas = ControleDePessoas();
 
-   // Cadastrando pessoas no sistema
-   Map<String, Mes> listaPessoas = {
-      'Jose'    : Mes.abril,
-      'Arthur'  : Mes.agosto,
-      'João'    : Mes.abril,
-      'Jesse'   : Mes.dezembro,
-      'Roberta' : Mes.fevereiro,
-      'Carla'   : Mes.fevereiro,
-      'Thania'  : Mes.agosto,
-      'Rafaela' : Mes.marco,
-      'Yuri'    : Mes.junho,
-      'Jonas'   : Mes.setembro,
-      'Elias'   : Mes.outubro,
-      'Abel'    : Mes.maio,
-      'Danilo'  : Mes.abril,
-      'Jonathan': Mes.abril,
-      'Joseph'  : Mes.setembro,
-      'Abdul'   : Mes.janeiro,
-      'Jean'    : Mes.abril
-   };
-   
-   // Passar por todos os meses com pessoas, e imprimir os nomes das pessoas
-    ControleDePessoas controleDePessoas = ControleDePessoas();
-    controleDePessoas.imprimirPessoas(listaPessoas);
+  // Cadastrando pessoas no sistema
+  controleDePessoas
+    ..cadastrarPessoa(Pessoa('Jose', Mes.abril))
+    ..cadastrarPessoa(Pessoa('Arthur', Mes.agosto))
+    ..cadastrarPessoa(Pessoa('João', Mes.abril))
+    ..cadastrarPessoa(Pessoa('Jesse', Mes.dezembro))
+    ..cadastrarPessoa(Pessoa('Roberta', Mes.fevereiro))
+    ..cadastrarPessoa(Pessoa('Carla', Mes.fevereiro))
+    ..cadastrarPessoa(Pessoa('Thania', Mes.agosto))
+    ..cadastrarPessoa(Pessoa('Rafaela', Mes.marco))
+    ..cadastrarPessoa(Pessoa('Yuri', Mes.junho))
+    ..cadastrarPessoa(Pessoa('Jonas', Mes.setembro))
+    ..cadastrarPessoa(Pessoa('Elias', Mes.outubro))
+    ..cadastrarPessoa(Pessoa('Abel', Mes.maio))
+    ..cadastrarPessoa(Pessoa('Danilo', Mes.abril))
+    ..cadastrarPessoa(Pessoa('Jonathan', Mes.abril))
+    ..cadastrarPessoa(Pessoa('Joseph', Mes.setembro))
+    ..cadastrarPessoa(Pessoa('Abdul', Mes.janeiro))
+    ..cadastrarPessoa(Pessoa('Jean', Mes.abril));
+
+  // Passar por todos os meses com pessoas, e imprimir os nomes das pessoas
+  for (final mes in controleDePessoas.mesesComPessoas) {
+    print('\n${mes.name}');
+
+    for (final pessoa in controleDePessoas.pessoasPorMes(mes)) {
+      print(' > ${pessoa.nome}');
+    }
+  }
+
+  var sla = controleDePessoas.mesesComPessoas;
+  print(sla);
 }
 
 enum Mes {
-   janeiro,
-   fevereiro,
-   marco,
-   abril,
-   maio,
-   junho,
-   julho,
-   agosto,
-   setembro,
-   outubro,
-   novembro,
-   dezembro,
+  janeiro,
+  fevereiro,
+  marco,
+  abril,
+  maio,
+  junho,
+  julho,
+  agosto,
+  setembro,
+  outubro,
+  novembro,
+  dezembro,
+}
+
+class Pessoa {
+  Pessoa(this.nome, this.mesDeNascimento);
+
+  final String nome;
+  final Mes mesDeNascimento;
 }
 
 class ControleDePessoas {
 
-  void imprimirPessoas(Map listaPessoas){
-    int index = 0;
+  final pessoas = <Mes, List<Pessoa>>{};
 
-    for(int i = 0; i<12; i++){
-      Mes mes = Mes.values.elementAt(i);
-      print(mes.name);
+  /// Cadastra uma pessoa no sistema
+  void cadastrarPessoa(Pessoa pessoa) {
+    final key = pessoa.mesDeNascimento;
 
-      while(index < listaPessoas.length){
-        if(listaPessoas.entries.elementAt(index).value.index == i){
-        print('> ${listaPessoas.entries.elementAt(index).key}');
-      }
-      index++;
-      }
-      print('');
-      index = 0;
+    if (pessoas.containsKey(key)) {
+      pessoas[key]!.add(pessoa);
+    } else {
+      pessoas[key] = [pessoa];
+      pessoas.addAll({key: [pessoa]});
     }
+  }
+
+  /// Retorna a lista de meses com pessoas cadastradas
+  List<Mes> get mesesComPessoas {
+
+    return pessoas.keys.toList()..sort((a, b) => a.index.compareTo(b.index));
+  }
+
+  /// Retorna a lista de pessoas que nasceram no [mes] especificado
+  List<Pessoa> pessoasPorMes(Mes mes) {
+    final pessoa = <Pessoa>[];
+    
+    return pessoas[mes]!;
   }
 }
